@@ -7,13 +7,29 @@ public class Member {
 	private String memberbirth;
 	private Gender memebergender; // 남/여 men,women
 
-	public Member(int memberId, String membername, String memberphone, String memberbirth, Gender memebergender) {
+	public Member() {
 		super();
 		this.memberId = memberId;
 		this.membername = membername;
 		this.memberphone = memberphone;
 		this.memberbirth = memberbirth;
 		this.memebergender = memebergender;
+	}
+
+	public Member(int memberId, String membername, String memberphone, String memberbirth, Gender memebergender) {
+		this.memberId = memberId;
+		this.membername = membername;
+		this.memberphone = memberphone;
+		this.memberbirth = memberbirth;
+		this.memebergender = memebergender;
+	}
+
+	
+
+	public Member(int memberId, String membername, String memberphone) {
+		this.memberId = memberId;
+		this.membername = membername;
+		this.memberphone = memberphone;
 	}
 
 	public int getMemberId() {

@@ -22,6 +22,6 @@ public class Example01 {
 		//첫번째위치 : e1, 두번째위치: e2,
 		//세번째위치 : new Eployee(1234, "임지연", "ljy@email.com", 5000000, "총무부")
 		
-		eployee[] eployees = { e1, e2, e3 };
+		
 	}
 }
