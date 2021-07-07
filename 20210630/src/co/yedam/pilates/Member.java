@@ -81,7 +81,10 @@ public class Member {
 	}
 
 	public String showInfo() {
-		String info = "[회원번호: " + memberId + "회원이름: " + membername + "연락처 " + memberphone + "생년월일: " + memberbirth
+		String info = "[회원번호: " + memberId + 
+				"회원이름: " + membername + 
+				"연락처 " + memberphone + 
+				"생년월일: " + memberbirth
 				+ "성별: " + memebergender + "]";
 		return info;
 	}
