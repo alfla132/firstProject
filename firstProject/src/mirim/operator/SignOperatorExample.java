@@ -7,5 +7,8 @@ public class SignOperatorExample {
 		int result2 = -x;
 		System.out.println("result1=" + result1);
 		System.out.println("result2=" + result2);
+
+		short s = 100;
+		
 	}
 }
