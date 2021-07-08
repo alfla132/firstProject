@@ -1,5 +1,7 @@
 package co.friend.view;
 
+import java.util.List;
+
 import co.friend.access.FriendAccess;
 import co.friend.access.FriendList;
 import co.friend.common.ScannerUtil;
@@ -36,9 +38,12 @@ public class FriendCliApp {
 			case 6: // 전화번호조회
 				searchTel();
 				break;
-
+			case 9: // 종료
+				System.out.println("프로그램이 종료되었습니다.");
+				break;
 			}
 		} while (menu != 9);
+		
 	}
 
 	public void insert() {
@@ -61,9 +66,8 @@ public class FriendCliApp {
 	}
 
 	public void list() {
-		Friend[] friendList = service.selectAll();
+		List<Friend> friendList = service.selectAll();
 		boolean exist = false;
-
 		for (Friend friend : friendList) {
 			if (friend != null) {
 				System.out.println(friend.toString());

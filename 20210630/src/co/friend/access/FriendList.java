@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import co.friend.model.Friend;
@@ -14,7 +16,7 @@ import co.friend.model.Friend;
 public class FriendList implements FriendAccess {
 
 	String path = "c:/tmp/friendList.txt";
-	Friend[] friends;
+	List<Friend> friends;
 
 	public void open() {
 		File file = new File(path);
@@ -42,12 +44,13 @@ public class FriendList implements FriendAccess {
 				Friend friend = new Friend(arr[0], arr[1], arr[2]);
 
 				// 배열의 빈공간에 한건씩 저장하겠습니다.
-				for (int i = 0; i < friends.length; i++) {
-					if (friends[i] == null) {
-						friends[i] = friend;
-						break;
-					}
-				}
+//				for (int i = 0; i < friends.size(); i++) {
+//					if (friends[i] == null) {
+//						friends[i] = friend;
+//						break;
+//					}
+//				}
+				friends.add(friend);
 			}
 			scn.close();
 		} catch (FileNotFoundException e) {
@@ -60,11 +63,9 @@ public class FriendList implements FriendAccess {
 		BufferedWriter br = null;
 		try {
 			br = new BufferedWriter(new FileWriter(path));
-			for (int i = 0; i < friends.length; i++) {
-				if (friends[i] != null) {
-					br.write(String.format("%s,%s,%s\n", friends[i].getGubun(), friends[i].getName(),
-							friends[i].getTel()));
-				}
+			for (int i = 0; i < friends.size(); i++) {
+				br.write(String.format("%s,%s,%s\n", friends.get(i).getGubun(), friends.get(i).getName(),
+						friends.get(i).getTel()));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -78,27 +79,22 @@ public class FriendList implements FriendAccess {
 	}
 
 	public FriendList() {
-		friends = new Friend[10];
+		friends = new ArrayList<Friend>();
 		open();
 	}
 
 	@Override
 	public void insert(Friend friend) {
-		for (int i = 0; i < friends.length; i++) {
-			if (friends[i] == null) {
-				friends[i] = friend;
-				break;
-			}
-		}
+		friends.add(friend);
 		save();
 	}
 
 	@Override
 	public void update(Friend friend) {
-		for (int i = 0; i < friends.length; i++) {
-			if (friends[i] != null) {// 배열에 요소중에서 값이 있는 요소만 가져와서...
-				if (friends[i].getName().equals(friend.getName())) {
-					friends[i].setTel(friend.getTel());
+		for (int i = 0; i < friends.size(); i++) {
+			if (friends.get(i) != null) {// 배열에 요소중에서 값이 있는 요소만 가져와서...
+				if (friends.get(i).getName().equals(friend.getName())) {
+					friends.get(i).setTel(friend.getTel());
 					break;
 				}
 			}
@@ -108,42 +104,38 @@ public class FriendList implements FriendAccess {
 
 	@Override
 	public void delete(String name) {
-		for (int i = 0; i < friends.length; i++) {
-			if (friends[i] != null && friends[i].getName().equals(name)) {
-				friends[i] = null;
-				System.out.println("입력하신 회원이 삭제되었습니다. 복구하실 수 없습니다.");
-				break;
+		for (int i = 0; i < friends.size(); i++) {
+			if (friends.get(i).getName().equals(name)) {
+				friends.remove(i);
 			}
 		}
+		System.out.println("입력하신 회원이 삭제되었습니다. 복구하실 수 없습니다.");
 		save();
 	}
 
 	@Override
-	public Friend[] selectAll() {
+	public List<Friend> selectAll() {
 		return friends;
 	}
 
 	@Override
 	public Friend findTel(String tel) {
-		for (int i = 0; i < friends.length; i++) {
-			if (friends[i] != null && friends[i].getTel().equals(tel)) {
-				return friends[i];
+		for (int i = 0; i < friends.size(); i++) {
+			if (friends.get(i) != null && friends.get(i).getTel().equals(tel)) {
+				return friends.get(i);
 			}
 		}
 		return null;
 	}
-
 
 	@Override
 	public Friend selectOne(String name) {
-		for (int i = 0; i < friends.length; i++) {
-			if (friends[i] != null && friends[i].getName().equals(name)) {
-				return friends[i];
+		for (int i = 0; i < friends.size(); i++) {
+			if (friends.get(i) != null && friends.get(i).getName().equals(name)) {
+				return friends.get(i);
 			}
 		}
 		return null;
 	}
-
-	
 
 }

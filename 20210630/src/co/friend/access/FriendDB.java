@@ -1,5 +1,7 @@
 package co.friend.access;
 
+import java.util.List;
+
 import co.friend.model.Friend;
 
 // FriendAccess(인터페이스) 구현객체.
@@ -22,7 +24,7 @@ public class FriendDB implements FriendAccess {
 	}
 
 	@Override
-	public Friend[] selectAll() {
+	public List<Friend> selectAll() {
 		return null;
 	}
 
