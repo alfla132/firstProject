@@ -32,8 +32,9 @@ public class StudentExample {
 				maxStudent = students[i];
 			}
 		}
-		System.out.println("최고영어점수:" + maxStudent.getEngGrade() + " 이름:" + maxStudent.getName() + " 수학:"
-				+ maxStudent.getMathGrade());
+		System.out.println("최고영어점수:" + maxStudent.getEngGrade() + 
+				" 이름:" + maxStudent.getName() + 
+				" 수학:" + maxStudent.getMathGrade());
 		int mathSum = 0;
 		int engSum = 0;
 		double mathAvg = 0;
