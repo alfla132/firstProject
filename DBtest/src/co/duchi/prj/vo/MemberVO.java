@@ -62,13 +62,14 @@ public class MemberVO {
 
 	@Override
 	public String toString() {
-		return "MemberVO [Id= " + getId() + 
+		System.out.println("MemberVO [Id= " + getId() + 
 				", 비밀번호= " + getPassword() + 
 				", 이름= " + getName() + 
 				", 주소= " + getAddress() + 
 				", 전화번호= " + getTel() + 
 				", 나이= " + getAge() + 
-				"]";
+				"]");
+		return null;
 	}
 	
 	
