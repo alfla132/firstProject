@@ -80,13 +80,11 @@ public class Menu {
 		vo.setBoardId(sc.next());
 		sc.nextLine();
 		System.out.println("작가를 입력하세요.");
-		vo.setWriter(sc.next());
-		sc.nextLine();
+		vo.setWriter(sc.nextLine());
 		System.out.println("제목을 입력하세요.");
-		vo.setTitle(sc.next());
-		sc.nextLine();
+		vo.setTitle(sc.nextLine());
 		System.out.println("내용을 입력하세요.");
-		vo.setSubject(sc.next());
+		vo.setSubject(sc.nextLine());
 
 		int n = dao.BoardWrite(vo);
 

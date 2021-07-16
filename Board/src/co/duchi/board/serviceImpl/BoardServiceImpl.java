@@ -74,7 +74,7 @@ public class BoardServiceImpl extends DAO implements BoardServie {
 	public int BoardWrite(BoardVO vo) {
 		
 		int n = 0;
-		String sql = "insert into board vlaues(?,?,?,?)";
+		String sql = "insert into board(boardid,writer,title,subject) values(?,?,?,?)";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, vo.getBoardId());
