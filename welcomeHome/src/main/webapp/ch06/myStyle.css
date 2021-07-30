@@ -1,0 +1,17 @@
+p {
+    color:blue;
+}
+
+h2 {
+    background-color: aqua;
+}
+h2#show {
+    color:hotpink;
+}
+
+.show {
+    font-size: 50px;
+}
+input[type=submit] {
+    width: 100px;
+}

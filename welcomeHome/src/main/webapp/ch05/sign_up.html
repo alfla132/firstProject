@@ -1,89 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    <caption align="center">회원가입</caption>
+    <caption>
+        <h3 colspan="2" style="margin-left: 150px;">회원가입</h3>
+    </caption>
     <table>
         <tr>
-            <td><li>아이디</li></td><br>
-            <td><input type="text" name="user_id" id="user_id"></td><br>
-            <input type="submit" value="중복확인"><br>
+            <td>
+            <li style="list-style-type: circle;">아이디</li>
+            </td>
+            <td><input style="width: 80px;" type="text" name="user_id" id="user_id">
+                <input type="submit" value="중복확인"></td>
+        </tr>
+        <tr>
+            <td>
+                <li style="list-style-type: circle;">비밀번호</li>
+            </td>
+            <td><input type="password" name="user_pw" id="user_pw" required>
+                <br>
+                <input type="password" name="user_pw" id="user_pw" placeholder="비밀번호 재확인" required></td>
         </tr>
 
         <tr>
-            <p><td><li>비밀번호</li></td></p>
-            <p><td><input type="password" name="user_pw" id="user_pw" placeholder="비밀번호" required></td></p>
-            <p></p>
-            <p><td><input type="password" name="user_pw" id="user_pw" placeholder="비밀번호 재확인" required></td></p>
+            <td>
+            <li style="list-style-type: circle;">이름</li>
+            </td>
+            <td><input style="width: 80px;" type="text" name="user_name" id="user_name"></td>
         </tr>
 
         <tr>
-            <p><td><li>이름</li></td></p>
-            <p><td><input type="text" name="user_name" id="user_name"></td></p>
-        </tr>
-
-        <tr>
-            <p><td><li>주소</li></td></p>
-            <p><td><input type="text" name="user_address" id="user_address"></td></p>
-            <p><td><input type="text" name="user_address" id="user_address"></td></p>
-            <p><td><input type="text" name="user_address" id="user_address"></td></p>
-            <p><input type="submit" value="우편번호"></p>
+            <td>
+            <li style="list-style-type: circle;">주소</li>
+            </td>
+            <td><input style="width: 35px;" type="text" name="user_address" id="user_address">
+                - <input style="width: 35px;" type="text" name="user_address" id="user_address"> <input type="submit"
+                    value="우편번호">
+                <br>
+                <input type="text" name="user_address" id="user_address"></td>
 
         </tr>
 
         <tr>
-            <td><li>휴대전화</li></td>
-            <form>
+            <td>
+            <li style="list-style-type: circle;">휴대전화</li>
+            </td>
+            <td>
                 <select name="phone">
-                <optgroup>
-                <option>010</option>
-                <option>011</option>
-                <option>017</option>
-                </optgroup></select>
-                </form>
-                <p><td><input type="text" name="user_phone" id="user_phone"></td></p>
-                <p><td><input type="text" name="user_phone" id="user_phone"></td></p>
+                    <optgroup>
+                        <option>010</option>
+                        <option>011</option>
+                        <option>017</option>
+                    </optgroup>
+                </select>
+
+                <input style="width: 50px;" type="text" name="user_phone" id="user_phone">
+                <input style="width: 50px;" type="text" name="user_phone" id="user_phone"></td>
         </tr>
 
         <tr>
-            <td><li>전화번호</li></td>
-            <form>
+            <td>
+             <li style="list-style-type: circle;">전화번호</li></ul>
+            </td>
+            <td>
                 <select name="phone2">
-                <optgroup>
-                <option>010</option>
-                <option>011</option>
-                <option>017</option>
-                </optgroup></select>
-                </form>
-                <p><td><input type="text" name="user_phone" id="user_phone"></td></p>
-                <p><td><input type="text" name="user_phone" id="user_phone"></td></p>
+                    <optgroup>
+                        <option>010</option>
+                        <option>011</option>
+                        <option>017</option>
+                    </optgroup>
+                </select>
+                <input style="width: 50px;" type="text" name="user_phone" id="user_phone">
+                <input style="width: 50px;" type="text" name="user_phone" id="user_phone">
+            </td>
         </tr>
 
         <tr>
-            <td><li>이메일</li></td>
-            <p><td><input type="email" name="user_email" id="user_email"></td></p>
-            <form>
+            <td>
+            <li style="list-style-type: circle;">이메일</li>
+            </td>
+
+            <td><input type="email" name="user_email" id="user_email">
                 <select name="email">
-                <optgroup>
-                <option>@naver.com</option>
-                <option>@gmail.com</option>
-                <option>@daum.net</option>
-                </optgroup></select>
-                </form>
+                    <optgroup>
+                        <option>@naver.com</option>
+                        <option>@gmail.com</option>
+                        <option>@daum.net</option>
+                    </optgroup>
+                </select>
+            </td>
         </tr>
-        
+
         <tr>
-            <td><li>생년월일</li></td>
-                    <td><input type="radio" name="user_yearmonth" id="user_yearmonth" value="양">양
-                    <input type="radio" name="user_yearmonth" id="user_yearmonth" value="음">음</td>
-                    <form>
-                        <select name="년도">
-                        <optgroup>
+            <td>
+            <li style="list-style-type: circle;">생년월일</li>
+            </td>
+            <td>
+                <input type="radio" name="user_yearmonth" id="user_yearmonth" value="양">양
+                <input type="radio" name="user_yearmonth" id="user_yearmonth" value="음">음
+                <br>
+                <select name="년도">
+                    <optgroup>
                         <option>2014</option>
                         <option>2013</option>
                         <option>2012</option>
@@ -92,41 +116,50 @@
                         <option>2009</option>
                         <option>2008</option>
                         <option>2007</option>
-                        </optgroup></select>
-                        </form>
-                        <form>
-                            <select name="월">
-                            <optgroup>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>04</option>
-                            <option>05</option>
-                            <option>...</option>
-                            <option>11</option>
-                            <option>12</option>
-                            </optgroup></select>
-                            </form>
-                            <form>
-                                <select name="일">
-                                <optgroup>
-                                <option>01</option>
-                                <option>02</option>
-                                <option>03</option>
-                                <option>04</option>
-                                <option>...</option>
-                                <option>29</option>
-                                <option>30</option>
-                                <option>31</option>
-                                </optgroup></select>
-                                </form>
+                    </optgroup>
+                </select>
+                <select name="월">
+                    <optgroup>
+                        <option>01</option>
+                        <option>02</option>
+                        <option>03</option>
+                        <option>04</option>
+                        <option>05</option>
+                        <option>...</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </optgroup>
+                </select>
+                <select name="일">
+                    <optgroup>
+                        <option>01</option>
+                        <option>02</option>
+                        <option>03</option>
+                        <option>04</option>
+                        <option>...</option>
+                        <option>29</option>
+                        <option>30</option>
+                        <option>31</option>
+                    </optgroup>
+                </select>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="checkbox" name="email" id="email">000의 이메일을 수신합니다
+                <br>
+                <input type="checkbox" name="SMS" id="SMS">000의 SMS를 수신합니다
+                <br>
+            </td>
         </tr>
 
         <tr>
-            <input type="checkbox" name="email" id="email">000의 이메일을 수신합니다</td>
-            <input type="checkbox" name="SMS" id="SMS">000의 SMS를 수신합니다</td>
+            <td colspan="2" align="center">
+                <input style="color: white; background-color:rgb(243, 41, 41);" type="submit" value="회원가입">
+                <input style="color: white; background-color: black" type="reset" value="가입취소">
+            </td>
         </tr>
 
     </table>
 </body>
+
 </html>

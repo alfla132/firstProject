@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    div { color: white;}
+    h2::first-letter { font-size: 3-px; color:mediumaquamarine; text-transform: uppercase;}
+    h4::first-line {color: blue;}
+    input:focus { background-color: lightpink;}
+    input:checked + div.d1 {background-color: gray;}
+    input:checked + div.d2 {background-color:black;}
+</style>
+<body>
+    <h2>주현아 자면 안돼</h2>
+    <h4>문제) 오늘 가영이가 먹은 점심의 메뉴는?</h4>
+    <p>정답작성: <input type="text"></p>
+    <h2>answer</h2>
+    힌트보기 : <input type="checkbox">
+    <div class="d1">
+        유자 맛이 났어요
+    </div>
+    정답 보기 : <input type="checkbox">
+    <div class="d2">
+        돈까스
+    </div>
+</body>
+
+</html>
