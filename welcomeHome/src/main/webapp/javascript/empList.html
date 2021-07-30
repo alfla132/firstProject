@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>board/empList.html</title>
+</head>
+
+<body>
+    <!-- <div id="container">
+        <form name="empList" action="EmpListServlet.do" method="GET">
+            <label for="uid">아이디:</label>
+            <input type="text" name="uid" id="uid"><br>
+            <label for="upw">비밀번호:</label>
+            <input type="password" name="upw" id="upw"><br>
+            <input type="submit" value="로그인">
+        </form>
+    </div> -->
+
+
+    <script>
+       
+        let div = document.createElement('div');​
+        div.setAttribute("id", "container");
+
+        let form = document.createElement('form');
+        form.setAttribute("name", "empList");
+        form.setAttribute("action", "../EmpListServlet.do");
+        form.setAttribute("method", "GET");
+        form.setAttribute("onsubmit", "submitFncA(event)")
+
+        let label1 = document.createElement('label');
+        label1.setAttribute("for", "uid");
+        label1.innerHTML = "아이디: ";
+
+        let input1 = document.createElement('input');
+        input1.setAttribute("type", "text");
+        input1.setAttribute("name", "uid");
+        input1.setAttribute("id", "uid");
+
+        let br1 = document.createElement("br");
+
+        let label2 = document.createElement('label');
+        label2.setAttribute("for", "upw");
+        label2.innerHTML = "비밀번호: ";
+
+        let input2 = document.createElement('input');
+        input2.setAttribute("type", "password");
+        input2.setAttribute("name", "upw");
+        input2.setAttribute("id", "upw");
+
+        let br2 = document.createElement("br");
+
+        let input3 = document.createElement('input');
+        input3.setAttribute("type", "submit");
+        input3.setAttribute("value", "로그인");
+
+        div.appendChild(form);
+        form.append(label1, input1, br1, label2, input2, br2, input3) ;
+
+        console.log(div)
+
+        document.body.appendChild(div);
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            let url = this.getAttribute('action');
+
+            let xhtp = new XMLHttpRequest();
+            xhtp.open('get', url);
+            xhtp.send();
+            xhtp.onload = function () {
+                let data = JSON.parse(xhtp.responseText);
+                console.log(xhtp.responseText);
+            }
+        })
+    </script>
+
+</body>
+
+</html>
