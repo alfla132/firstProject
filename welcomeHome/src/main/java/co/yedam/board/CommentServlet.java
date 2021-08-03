@@ -29,14 +29,7 @@ public class CommentServlet extends HttpServlet {
 		String cmd = request.getParameter("cmd");
 
 		if (cmd == null) {
-			StringBuffer sb = new StringBuffer();
-			sb.append("<result>");
-			sb.append("<code>error</code>");
-			sb.append("<data>");
-			sb.append("cmd null");
-			sb.append("</data>");
-			sb.append("</result>");
-			out.print(sb.toString());
+			out.print(errorXML("cmd null"));
 
 		} else if (cmd.equals("selectAll")) { // 1) 한건조회
 			try {
@@ -58,15 +51,10 @@ public class CommentServlet extends HttpServlet {
 				sb.append("</result>");
 				out.print(sb.toString());
 			} catch (Exception e) {
-				StringBuffer sb = new StringBuffer();
-				sb.append("<result>");
-				sb.append("<code>error</code>");
-				sb.append("<data>" + e.getMessage() + "</data>");
-				sb.append("</result>");
-				out.print(sb.toString());
+				out.print(errorXML(e.getMessage()));
 			}
 
-		} else if (cmd.equals("insert")) { //2) 한건입력.
+		} else if (cmd.equals("insert")) { // 2) 한건입력.
 			try {
 				String name = request.getParameter("name");
 				String content = request.getParameter("content");
@@ -75,27 +63,47 @@ public class CommentServlet extends HttpServlet {
 				comment.setContent(content);
 				HashMap<String, Object> map = CommentDAO.getInstance().insert(comment);
 
-				StringBuffer sb = new StringBuffer();
-				sb.append("<result>");
-				sb.append("<code>success</code>");
-				sb.append("<data>");
-				sb.append("<row>");
-				sb.append("  <id>" + map.get("id") + "</id>");
-				sb.append("  <name>" + map.get("name") + "</name>");
-				sb.append("  <content>" + map.get("content") + "</content>");
-				sb.append("</data>");
-				sb.append("</result>");
-				out.println(sb.toString());
-				
+				out.println(dataXML(map));
+
 			} catch (Exception e) {
-				StringBuffer sb = new StringBuffer();
-				sb.append("<result>");
-				sb.append("<code>error</code>");
-				sb.append("<data>" + e.getMessage() + "</data>");
-				sb.append("</result>");
-				out.print(sb.toString());
+				out.print(errorXML(e.getMessage()));
 			}
+		} else if (cmd.equals("update")) {
+			String id = request.getParameter("id");
+			String name = request.getParameter("name");
+			String content = request.getParameter("content");
+			Comment comment = new Comment();
+			comment.setId(id);
+			comment.setName(name);
+			comment.setContent(content);
+			HashMap<String, Object> map = //
+					CommentDAO.getInstance().update(comment);
+			
+			out.println(dataXML(map));
 		}
+	}
+
+	private String dataXML(HashMap<String, Object> map) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<result>");
+		sb.append("<code>success</code>");
+		sb.append("<data>");
+		sb.append("  <id>" + map.get("id") + "</id>");
+		sb.append("  <name>" + map.get("name") + "</name>");
+		sb.append("  <content>" + map.get("content") + "</content>");
+		sb.append("</data>");
+		sb.append("</result>");
+		return sb.toString();
+	}
+
+	private String errorXML(String msg) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<result>");
+		sb.append("<code>error</code>");
+		sb.append("<data>" + msg + "</data>");
+		sb.append("</result>");
+
+		return sb.toString();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -35,14 +35,12 @@
 
 	function makeCommentView(comment) {
 		let div = document.createElement('div');
-		div.setAttribute('id', comment.children[0].innerHTML);
-		console.log(comment.children[2].innerHTML);
-		let str = '<strong>'
-				+ comment.children[1].innerHTML
-				+ '</strong>'
-				+ comment.children[2].innerHTML
-				+ '<input type="button" value="수정" onclick="viewUpdateForm()">'
-				+ '<input type="button" value="삭제" onclick="confirmDeletion()" >'
+		let id = comment.children[0].innerHTML;
+		div.setAttribute('id', id);
+		let str = '<strong>' + comment.children[1].innerHTML
+				+ '</strong>'+ comment.children[2].innerHTML
+				+ '<input type="button" value="수정" onclick="viewUpdateForm('+id+')">'
+				+ '<input type="button" value="삭제" onclick="confirmDeletion()" >';
 		div.innerHTML = str;
 		return div;
 	}
@@ -71,7 +69,6 @@
 	// 댓글등록 콜백.
 	function addResult() {
 		let xmlDoc = this.reponseXML;
-		console.log(xmlDoc);
 		let code = xmlDoc.getElementsByTagName('code')[0].innerHTML;
 		if (code == 'success') {
 			let listDiv = document.getElementById('commentList');
@@ -84,6 +81,14 @@
 			window.alert(msg);
 		}
 
+	}
+	
+	//수정 버튼 클릭시. 
+	function viewUpdateForm(id) {
+		let updateFormDiv = document.getElementById('commentUpdate');
+		let commentDiv = document.getElementById(id);
+		console.log(commentDiv);
+		
 	}
 </script>
 </head>
