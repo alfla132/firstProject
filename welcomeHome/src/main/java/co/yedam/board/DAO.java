@@ -5,18 +5,23 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DAO {
 	protected Connection conn;
-	protected PreparedStatement psmt; // sql명령을 보내고 실행하기 위한 객체
-	protected ResultSet rs; // select 결과를 받을 수 있는 객
+	protected Statement stmt;
+	protected PreparedStatement pstmt;
+	protected ResultSet rs;
 
 	public void connect() {
 		try {
+			// 1. 드라이버로딩
 			Class.forName("org.sqlite.JDBC");
-			String url = "D:\\db\\chinook.db";
+			// 2. DB 연결
+			String url = "D:\\sqlite\\db\\chinook\\chinook.db";
 			conn = DriverManager.getConnection("jdbc:sqlite:" + url);
-			System.out.println("connected!");
+			System.out.println("connected!!");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -25,6 +30,7 @@ public class DAO {
 	public void disconnect() {
 		if (conn != null)
 			try {
+				// 5. 연결 종료
 				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();

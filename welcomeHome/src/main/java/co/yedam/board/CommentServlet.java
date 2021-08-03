@@ -13,57 +13,94 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/CommentServlet")
 public class CommentServlet extends HttpServlet {
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-   public CommentServlet() {
-      super();
+	public CommentServlet() {
+		super();
+	}
 
-   }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/xml;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
 
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      request.setCharacterEncoding("utf-8");
-      response.setContentType("text/xml;charset=utf-8");
-      response.setCharacterEncoding("utf-8");
-//      response.getWriter().append("Served at: ").append(request.getContextPath());
+		PrintWriter out = response.getWriter();
+		String cmd = request.getParameter("cmd");
 
-      PrintWriter out = response.getWriter();
-      String cmd = request.getParameter("cmd");
+		if (cmd == null) {
+			StringBuffer sb = new StringBuffer();
+			sb.append("<result>");
+			sb.append("<code>error</code>");
+			sb.append("<data>");
+			sb.append("cmd null");
+			sb.append("</data>");
+			sb.append("</result>");
+			out.print(sb.toString());
 
-      if (cmd == null) {
-         StringBuffer sb = new StringBuffer();
-         sb.append("<result>");
-         sb.append("<code>error</code>");
-         sb.append("<data>");
-         sb.append("cmd null");
-         sb.append("</data>");
-         sb.append("</result>");
-         out.print(sb.toString());
+		} else if (cmd.equals("selectAll")) { // 1) 한건조회
+			try {
+				List<HashMap<String, Object>> list = //
+						CommentDAO.getInstance().selectAll();
 
-      } else if (cmd.equals("selectAll")) {
-         List<HashMap<String, Object>> list = CommentDAO.getInstance().selectAll();
-         StringBuffer sb = new StringBuffer();
-         sb.append("<result>");
-         sb.append("<code>success</code>");
-         for (HashMap<String, Object> map : list) {
-            sb.append("<data>");
-            sb.append("<id>" + map.get("id") + "</id>");
-            sb.append("<name>" + map.get("name") + "</name>");
-            sb.append("<content>" + map.get("content") + "</content>");
-            sb.append("</data>");
-         }
-         sb.append("</result>");
-         out.print(sb.toString());
+				StringBuffer sb = new StringBuffer();
+				sb.append("<result>");
+				sb.append("<code>success</code>");
+				sb.append("<data>");
+				for (HashMap<String, Object> map : list) {
+					sb.append("<row>");
+					sb.append("  <id>" + map.get("id") + "</id>");
+					sb.append("  <name>" + map.get("name") + "</name>");
+					sb.append("  <content>" + map.get("content") + "</content>");
+					sb.append("</row>");
+				}
+				sb.append("</data>");
+				sb.append("</result>");
+				out.print(sb.toString());
+			} catch (Exception e) {
+				StringBuffer sb = new StringBuffer();
+				sb.append("<result>");
+				sb.append("<code>error</code>");
+				sb.append("<data>" + e.getMessage() + "</data>");
+				sb.append("</result>");
+				out.print(sb.toString());
+			}
 
-      } else if (cmd.equals("insert")) {
+		} else if (cmd.equals("insert")) { //2) 한건입력.
+			try {
+				String name = request.getParameter("name");
+				String content = request.getParameter("content");
+				Comment comment = new Comment();
+				comment.setName(name);
+				comment.setContent(content);
+				HashMap<String, Object> map = CommentDAO.getInstance().insert(comment);
 
-      }
-   }
+				StringBuffer sb = new StringBuffer();
+				sb.append("<result>");
+				sb.append("<code>success</code>");
+				sb.append("<data>");
+				sb.append("<row>");
+				sb.append("  <id>" + map.get("id") + "</id>");
+				sb.append("  <name>" + map.get("name") + "</name>");
+				sb.append("  <content>" + map.get("content") + "</content>");
+				sb.append("</data>");
+				sb.append("</result>");
+				out.println(sb.toString());
+				
+			} catch (Exception e) {
+				StringBuffer sb = new StringBuffer();
+				sb.append("<result>");
+				sb.append("<code>error</code>");
+				sb.append("<data>" + e.getMessage() + "</data>");
+				sb.append("</result>");
+				out.print(sb.toString());
+			}
+		}
+	}
 
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-
-      doGet(request, response);
-   }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 
 }
