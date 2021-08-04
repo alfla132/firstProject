@@ -16,7 +16,31 @@ public class CommentDAO extends DAO {
 		instance = new CommentDAO();
 		return instance;
 	}
-
+	
+	// 글삭제(매개값: 글번호)
+	public HashMap<String, Object> delete(String id) {
+		connect();
+		String sql = "delete from comments where id=?";
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			int r = pstmt.executeUpdate();
+			System.out.println("삭제됨: " + r);
+			map.put("id", id);
+			
+			return map;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			disconnect();
+		}
+		return null;
+	}
+	
+	// 글내용 수정
 	public HashMap<String, Object> update(Comment comment) {
 		connect();
 		String sql = "update comments set name=?, content=? where id=?";

@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="utf-8">
 <title>board/commentList.html</title>
 <script>
 	window.onload = function() {
 		loadCommentList();
 	}
 
-	//¸ñ·ÏÁ¶È¸.
+	//ëª©ë¡ì¡°íšŒ.
 	function loadCommentList() {
 		let xhtp = new XMLHttpRequest();
 		xhtp.open('get', '../CommentServlet?cmd=selectAll');
 		xhtp.send();
 		xhtp.onload = loadCommentResult;
 	}
-	//¸ñ·ÏÁ¶È¸ Äİ¹é.
+	//ëª©ë¡ì¡°íšŒ ì½œë°±.
 	function loadCommentResult() {
 		let xmlDoc = this.responseXML;
 		let code = xmlDoc.getElementsByTagName('code')[0].innerHTML;
@@ -32,29 +32,36 @@
 			window.alert(msg);
 		}
 	}
-
+	
+	//ì˜¤ë¸Œì íŠ¸ í•œê±´ì„ ë§¤ê°œê°’ìœ¼ë¡œ ë°›ì•„ì„œ div ë°˜í™˜í•´ì£¼ëŠ” í•¨ìˆ˜.
 	function makeCommentView(comment) {
 		let div = document.createElement('div');
 		let id = comment.children[0].innerHTML;
 		div.setAttribute('id', id);
-		let str = '<strong>' + comment.children[1].innerHTML
-				+ '</strong>'+ comment.children[2].innerHTML
-				+ '<input type="button" value="¼öÁ¤" onclick="viewUpdateForm('+id+')">'
-				+ '<input type="button" value="»èÁ¦" onclick="confirmDeletion()" >';
+		div.setAttribute('data-id', comment.children[0].innerHTML);
+		div.setAttribute('data-name', comment.children[1].innerHTML);
+		div.setAttribute('data-content', comment.children[2].innerHTML);
+		let str = '<strong>' + comment.children[1].innerHTML + '</strong>'
+				+ comment.children[2].innerHTML
+				+ '<input type="button" value="ìˆ˜ì •" onclick="viewUpdateForm('
+				+ id + ')">'
+				+ '<input type="button" value="ì‚­ì œ" onclick="confirmDeletion('
+				+ id + ')" >';
 		div.innerHTML = str;
 		return div;
 	}
-
+	
+	//ë“±ë¡ë²„íŠ¼
 	function addComment() {
 		let name = document.addForm.name.value;
 		let content = document.addForm.content.value;
 		if (name == "") {
-			alert('ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä!');
+			alert('ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”!');
 			document.addForm.name.focus();
 			return;
 		}
 		if (content == "") {
-			alert('³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä!');
+			alert('ë‚´ìš©ì„ ì…ë ¥í•˜ì„¸ìš”!');
 			document.addForm.content.focus();
 			return;
 		}
@@ -66,52 +73,125 @@
 		xhtp.onload = addResult;
 
 	}
-	// ´ñ±Ûµî·Ï Äİ¹é.
+	// ëŒ“ê¸€ë“±ë¡ ì½œë°±.
 	function addResult() {
-		let xmlDoc = this.reponseXML;
+		let xmlDoc = this.responseXML;
 		let code = xmlDoc.getElementsByTagName('code')[0].innerHTML;
 		if (code == 'success') {
 			let listDiv = document.getElementById('commentList');
 			let comment = xmlDoc.getElementsByTagName('data')[0];
 			let commentDiv = makeCommentView(comment);
 			listDiv.appendChild(commentDiv);
-
 		} else if (code == 'error') {
 			let msg = xmlDoc.getElementsByTagName('data')[0].innerHTML;
 			window.alert(msg);
 		}
-
 	}
-	
-	//¼öÁ¤ ¹öÆ° Å¬¸¯½Ã. 
+
+	//ìˆ˜ì • ë²„íŠ¼ í´ë¦­ì‹œ. 
 	function viewUpdateForm(id) {
 		let updateFormDiv = document.getElementById('commentUpdate');
 		let commentDiv = document.getElementById(id);
 		console.log(commentDiv);
+		updateForm.id.value = commentDiv.dataset.id;
+		updateForm.name.value = commentDiv.dataset.name;
+		updateForm.content.value = commentDiv.dataset.content;
+		updateFormDiv.style.display = 'block'; //ìˆ˜ì •í™”ë©´ ì†ì„±.
+		commentDiv.after(updateFormDiv);
+		document.getElementById('commentAdd').style.display = 'none';
+	}
+
+	//ë³€ê²½ í´ë¦­ì‹œ.
+	function updateComment() {
+		let id = updateForm.id.value;
+		let name = updateForm.name.value;
+		let content = updateForm.content.value;
+		// 1.DBë³€ê²½ 2.í™”ë©´ë³€ê²½
+		let url = '../CommentServlet?cmd=update&id=' + id + '&name=' + name
+				+ '&content=' + content;
+		let xhtp = new XMLHttpRequest();
+		xhtp.open('get', url);
+		xhtp.send();
+		xhtp.onload = updateResult;
+
+	}
+	// ëŒ“ê¸€ ìˆ˜ì • ì½œë°± í•¨ìˆ˜.
+	function updateResult() {
+		console.log(this.responseXML);
+		let xmlDoc = this.responseXML;
+		let code = xmlDoc.getElementsByTagName('code')[0].innerHTML;
+		if (code == 'success') {
+			let comment = xmlDoc.getElementsByTagName('data')[0];
+			let commentDiv = makeCommentView(comment);
+			let id = commentDiv.getAttribute('id');
+			let oldDiv = document.getElementById(id);
+			console.log(id, oldDiv);
+			//replaceChild 
+			let parent = document.getElementById('commentList');
+			parent.replaceChild(commentDiv, oldDiv);
+			
+			document.getElementById('commentUpdate').style.display = 'none';
+			document.getElementById('commentAdd').style.display = 'block';
+		} else if (code == 'error') {
+			alert('ì—ëŸ¬ë°œìƒ');
+		}
+
+	}
+	
+	// ì·¨ì†Œë²„íŠ¼.
+	function cancelUpdate() {
+		//ìˆ˜ì •í™”ë©´ ìˆ¨ê¸°ê³  ë“±ë¡ í™”ë©´ì´ ë³´ì´ë„ë¡.
+		document.getElementById('commentUpdate').style.display = 'none';
+		document.getElementById('commentAdd').style.display = 'block';
+	}
+	
+	// ì‚­ì œë²„íŠ¼.
+	function confirmDeletion(id) {
+		let xhtp = new XMLHttpRequest();
+		xhtp.open('get', '../CommentServlet?cmd=delete&id=' + id);
+		xhtp.send();
+		xhtp.onload = deleteResult;
 		
 	}
+	
+	//ì‚­ì œ ì½œë°±
+	function deleteResult() {
+		let xmlDoc = this.responseXML;
+		let code = xmlDoc.getElementsByTagName('code')[0].innerHTML;
+		if (code == 'success') {
+			// document.getElementById().remove();
+			let id = xmlDoc.getElementsByTagName('data')[0].children[0].innerHTML;
+			document.getElementById(id).remove();
+			//window.alert('ì‚­ì œì™„ë£Œ.');
+			
+		} else if (code == 'error') {
+			alert('ì—ëŸ¬ë°œìƒ')
+		}
+	}
+	
 </script>
 </head>
 <body>
-	<!-- ´ñ±Û¸ñ·Ï -->
+	<!-- ëŒ“ê¸€ëª©ë¡ -->
 	<div id='commentList'></div>
-	<!-- ´ñ±Û µî·Ï È­¸é  -->
+	<!-- ëŒ“ê¸€ ë“±ë¡ í™”ë©´  -->
 	<div id='commentAdd'>
 		<form name='addForm' action=''>
-			ÀÌ¸§: <input type='text' name='name' size='10'><br> ³»¿ë:
+			ì´ë¦„: <input type='text' name='name' size='10'><br> ë‚´ìš©:
 			<textarea name='content' cols='20' rows='3'></textarea>
-			<br> <input type='button' value='µî·Ï' onclick='addComment()'>
+			<br> <input type='button' value='ë“±ë¡' onclick='addComment()'>
 
 		</form>
 	</div>
-	<!-- ´ñ±Û ¼öÁ¤ È­¸é -->
+	<!-- ëŒ“ê¸€ ìˆ˜ì • í™”ë©´ -->
 	<div id='commentUpdate' style='display: none;'>
-		<form name='updateForm' action=""></form>
-		<input type='hidden' name='id'> ÀÌ¸§: <input type='text'
-			name='name' size='10'><br> ³»¿ë:
-		<textarea name='content' cols='20' rows='3'></textarea>
-		<br> <input type='button' value='º¯°æ' onclick='updateComment()'>
-		<input type='button' value='Ãë¼Ò' onclick='cancelUpdate()'>
+		<form name='updateForm' action="">
+			<input type='hidden' name='id'> ì´ë¦„: <input type='text'
+				name='name' size='10'><br> ë‚´ìš©:
+			<textarea name='content' cols='20' rows='3'></textarea>
+			<br> <input type='button' value='ë³€ê²½' onclick='updateComment()'>
+			<input type='button' value='ì·¨ì†Œ' onclick='cancelUpdate()'>
+		</form>
 	</div>
 
 </body>
