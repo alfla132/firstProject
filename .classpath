@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="20210630/src"/>
+	<classpathentry kind="src" path="20210713/src"/>
+	<classpathentry kind="src" path="Board/src"/>
+	<classpathentry kind="src" path="DBprj/src"/>
+	<classpathentry kind="src" path="DBtest/src"/>
+	<classpathentry excluding="mirim/" kind="src" path="firstProject/src"/>
+	<classpathentry kind="src" path="firstProject/src/mirim"/>
+	<classpathentry kind="src" path="Manger/src"/>
+	<classpathentry kind="src" path="MethodExam/src"/>
+	<classpathentry kind="src" path="welcomeHome/src/main/java"/>
+	<classpathentry kind="lib" path="welcomeHome/src/main/webapp/WEB-INF/lib/gson-2.8.2.jar"/>
+	<classpathentry kind="lib" path="welcomeHome/src/main/webapp/WEB-INF/lib/ojdbc6_g.jar"/>
+	<classpathentry kind="lib" path="welcomeHome/src/main/webapp/WEB-INF/lib/sqlite-jdbc-3.36.0.1.jar"/>
+	<classpathentry kind="output" path="firstProject/bin"/>
+</classpath>
